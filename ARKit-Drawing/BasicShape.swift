@@ -8,10 +8,10 @@ enum ShapeOption: String, RawRepresentable {
     case resetScene = "Reset Scene"
 }
 
-enum Shape: String {
-    case box = "Box", sphere = "Sphere", cylinder = "Cylinder", cone = "Cone", torus = "Torus"
+enum Shape: String, CaseIterable {
+    case box = "Box", sphere = "Sphere", cylinder = "Cylinder", cone = "Cone", torus = "Torus", pyramid = "Pyramid"
 }
 
-enum Size: String {
-    case small = "Small", medium = "Medium", large = "Large"
+enum Size: String, CaseIterable {
+    case small = "Small", medium = "Medium", large = "Large", extraLarge = "Extra Large"
 }

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5519DC5720238B6000B1008D /* OptionSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5519DC5620238B6000B1008D /* OptionSelectorViewController.swift */; };
+		581B7B8E2254B17400E92850 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 581B7B8D2254B17400E92850 /* LICENSE.txt */; };
+		58C1809B2255036C00E67996 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C1809A2255036C00E67996 /* Utilities.swift */; };
 		BE618F32203E31B8005EC6F1 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE618F31203E31B8005EC6F1 /* UIViewController+Extensions.swift */; };
 		BE915EAB20105C1D00A251FD /* OptionsContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE915EAA20105C1D00A251FD /* OptionsContainerViewController.swift */; };
 		BEDB2EDA200EABAD001C6BBC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDB2ED9200EABAD001C6BBC /* AppDelegate.swift */; };
@@ -22,6 +24,8 @@
 
 /* Begin PBXFileReference section */
 		5519DC5620238B6000B1008D /* OptionSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionSelectorViewController.swift; sourceTree = "<group>"; };
+		581B7B8D2254B17400E92850 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		58C1809A2255036C00E67996 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		BE618F31203E31B8005EC6F1 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		BE915EAA20105C1D00A251FD /* OptionsContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsContainerViewController.swift; sourceTree = "<group>"; };
 		BEDB2ED6200EABAD001C6BBC /* ARKit-Drawing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ARKit-Drawing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +51,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		58C1809C2255037700E67996 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				58C1809A2255036C00E67996 /* Utilities.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		58C1809D2255037F00E67996 /* LICENSE */ = {
+			isa = PBXGroup;
+			children = (
+				581B7B8D2254B17400E92850 /* LICENSE.txt */,
+			);
+			path = LICENSE;
+			sourceTree = "<group>";
+		};
 		BEDB2ECD200EABAD001C6BBC = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +90,8 @@
 				BEDB2EDD200EABAD001C6BBC /* ViewController.swift */,
 				BEDB2EEF200ECC4C001C6BBC /* BasicShape.swift */,
 				BEDB2EDF200EABAD001C6BBC /* Main.storyboard */,
+				58C1809D2255037F00E67996 /* LICENSE */,
+				58C1809C2255037700E67996 /* Utilities */,
 				BEDB2EF1200ECF14001C6BBC /* Options */,
 				BEDB2EDB200EABAD001C6BBC /* models.scnassets */,
 				BEDB2EE2200EABAD001C6BBC /* Assets.xcassets */,
@@ -150,6 +172,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				581B7B8E2254B17400E92850 /* LICENSE.txt in Resources */,
 				BEDB2EDC200EABAD001C6BBC /* models.scnassets in Resources */,
 				BEDB2EEE200ECB94001C6BBC /* Options.storyboard in Resources */,
 				BEDB2EE6200EABAD001C6BBC /* LaunchScreen.storyboard in Resources */,
@@ -170,6 +193,7 @@
 				BEDB2EDA200EABAD001C6BBC /* AppDelegate.swift in Sources */,
 				5519DC5720238B6000B1008D /* OptionSelectorViewController.swift in Sources */,
 				BE618F32203E31B8005EC6F1 /* UIViewController+Extensions.swift in Sources */,
+				58C1809B2255036C00E67996 /* Utilities.swift in Sources */,
 				BEDB2EF0200ECC4C001C6BBC /* BasicShape.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

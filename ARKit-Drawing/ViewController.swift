@@ -1,16 +1,25 @@
 import ARKit
 
 class ViewController: UIViewController {
-
+    
+    // MARK: IBOutlets
     @IBOutlet var sceneView: ARSCNView!
+    
+    // MARK: - Properties
     
     let configuration = ARWorldTrackingConfiguration()
     
     /// Mimimim distance between nearby points (in 2D coordinates)
-    let touchDistanceThreshold = CGFloat(80)
+    //let touchDistanceThreshold = CGFloat(80)
     
-    /// Coordinates of last placed point
-    var lastObjectPlacedLocation: CGPoint?
+    /// Mimimim distance between nearby nodes (in 3D coordinates)
+    let minDistanceBetweenVirtualObjects = Float(0.01)
+    
+//    /// Coordinates of last placed point
+//    var lastObjectPlacedLocation: CGPoint?
+    
+    /// Coordinates of last placed vector
+    //var lastObjectPlacedCoordinates: SCNVector3?
     
     /// Node selected by user
     var selectedNode: SCNNode?
@@ -39,6 +48,8 @@ class ViewController: UIViewController {
     enum ObjectPlacementMode {
         case freeform, plane, image
     }
+    
+    // MARK: - Life cicle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,6 +107,7 @@ extension ViewController {
     
 }
 
+// MARK: - Options view controller delegate
 extension ViewController: OptionsViewControllerDelegate {
     
     func objectSelected(node: SCNNode) {
@@ -138,14 +150,11 @@ extension ViewController {
             let touch = touches.first,
             let node = selectedNode else { return }
         
+        let location = touch.location(in: sceneView)
+        
         switch objectMode {
-        case .freeform:
-            addNodeInFron(node)
-        case .plane:
-            let location = touch.location(in: sceneView)
-            addNode(node, to: location)
-        case .image: break
-            
+        case .plane, .freeform: tryAddNode(node, to: location)
+        default: break
         }
         
     }
@@ -153,30 +162,15 @@ extension ViewController {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
         
-        func distanceBetweenLocations(_ locations: [CGPoint]) -> CGFloat {
-            guard locations.count >= 2 else { return CGFloat() }
-            
-            let deltaX = locations.last!.x - locations.first!.x
-            let deltaY = locations.last!.y - locations.first!.y
-            
-            return sqrt(deltaX * deltaX + deltaY * deltaY)
-        }
-        
         guard
             let touch = touches.first,
-            let node = selectedNode,
-            let lastLocation = lastObjectPlacedLocation else { return }
+            let node = selectedNode else { return }
         
+        let location = touch.location(in: sceneView)
         
-        let newLocation = touch.location(in: sceneView)
-        let distance = distanceBetweenLocations([newLocation, lastLocation])
-        
-        guard distance >= touchDistanceThreshold else { return }
-        
-        if case .plane = objectMode {
-            
-            addNode(node, to: newLocation)
-            
+        switch objectMode {
+        case .plane, .freeform: tryAddNode(node, to: location)
+        default: break
         }
         
     }
@@ -184,13 +178,99 @@ extension ViewController {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         
-        lastObjectPlacedLocation = nil
+        //lastObjectPlacedCoordinates = nil
     }
     
 }
 
 // MARK: - Placement methods
 extension ViewController {
+    
+    // MARK: ...checking
+    private func checkDistance(from node: SCNNode, to nodes: [SCNNode]) -> Bool {
+        
+        for secondNode in nodes {
+            guard checkDistanceBetweenNodes([node, secondNode]) else {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    private func checkDistanceBetweenNodes(_ nodes: [SCNNode]) -> Bool {
+        
+        guard
+            let firstNode = nodes.first,
+            let secontNode = nodes.last else { return false }
+        
+        let firstSphere = firstNode.boundingSphere
+        let secondSphere = secontNode.boundingSphere
+        
+        var distance = firstNode.worldPosition.distanceTo(secontNode.worldPosition)
+        distance -= firstSphere.radius
+        distance -= secondSphere.radius
+        
+        return distance >= minDistanceBetweenVirtualObjects
+        
+    }
+    
+    // MARK: ...calculating
+    private func calculateTransformForPlanePosition(for node: SCNNode, use location: CGPoint) -> simd_float4x4? {
+        
+        guard let result = sceneView.hitTest(location, types: .existingPlaneUsingGeometry).first else { return nil }
+        
+        var translation = matrix_identity_float4x4
+        translation.columns.3.y = node.boundingBox.min.y >= 0 ? node.boundingBox.min.y : node.boundingBox.max.y
+        
+        return matrix_multiply(result.worldTransform, translation)
+        
+    }
+        
+    private func calculateTransformForFrontPosition(use location: CGPoint) -> simd_float4x4? {
+        
+        guard let currentFrame = sceneView.session.currentFrame else { return nil }
+        
+        let center = CGPoint(x: sceneView.bounds.midX, y: sceneView.bounds.midY)
+        let translateX = Float((location.x - center.x) / 3000)
+        let translateY = Float((location.y - center.y) / 3000)
+        
+        var translation = matrix_identity_float4x4
+        translation.columns.3.z = -0.2
+        translation.columns.3.x = translateY
+        translation.columns.3.y = translateX
+        
+        return matrix_multiply(currentFrame.camera.transform, translation)
+    }
+    
+    // MARK: ...adding
+    
+    private func tryAddNode(_ node: SCNNode, to location: CGPoint) {
+        
+        var transform: simd_float4x4?
+        
+        switch objectMode {
+        case .freeform:
+            transform = calculateTransformForFrontPosition(use: location)
+        case .plane:
+            transform = calculateTransformForPlanePosition(for: node, use: location)
+        default:
+            break
+        }
+        
+        guard transform != nil else { return }
+        
+        node.simdTransform = transform!
+        
+        // Check minimum distance
+        guard checkDistance(from: node, to: placedNodes) else { return }
+        
+        // Add node to scene root
+        addNodeToSceneRoot(node)
+        
+        //lastObjectPlacedCoordinates = node.worldPosition
+        
+    }
     
     /// Adds a node to parent node
     ///
@@ -208,37 +288,10 @@ extension ViewController {
         
     }
     
-    /// Places object defined by node at 20 cm before the camera
-    ///
-    /// - Parameter node: SCNNode to place in scene
-    private func addNodeInFron(_ node: SCNNode) {
-        
-        guard let currentFrame = sceneView.session.currentFrame else { return }
-        
-        var translation = matrix_identity_float4x4
-        translation.columns.3.z = -0.2
-        
-        node.simdTransform = matrix_multiply(currentFrame.camera.transform, translation)
-        
-        addNodeToSceneRoot(node)
-    }
-    
-    private func addNode(_ node: SCNNode, to location: CGPoint) {
-        
-        guard let result = sceneView.hitTest(location, types: [.existingPlaneUsingGeometry]).first else { return }
-        
-        var translation = matrix_identity_float4x4
-        translation.columns.3.y = node.boundingBox.min.y >= 0 ? node.boundingBox.min.y : node.boundingBox.max.y
-        node.simdTransform = matrix_multiply(result.worldTransform, translation)
-        
-        addNodeToSceneRoot(node)
-        lastObjectPlacedLocation = location
-    }
-    
     /// Adds an object adds an clone object defined by node to scene root
     ///
     /// - Parameter node: SCNNode wich will be added
-    fileprivate func addNodeToSceneRoot(_ node: SCNNode) {
+    private func addNodeToSceneRoot(_ node: SCNNode) {
         
         let rootNode = sceneView.scene.rootNode
         addNode(node, to: rootNode)
@@ -270,7 +323,7 @@ extension ViewController {
         addNode(selectedNode, to: node)
     }
     
-    func createPlacementArea(size: CGSize) -> SCNNode {
+    private func createPlacementArea(size: CGSize) -> SCNNode {
         
         let placementAreaNode = SCNNode(geometry: SCNPlane(width: size.width, height: size.height))
         placementAreaNode.geometry?.firstMaterial?.diffuse.contents = #colorLiteral(red: 0.060786888, green: 0.223592639, blue: 0.8447286487, alpha: 0.5)
@@ -280,7 +333,9 @@ extension ViewController {
         return placementAreaNode
     }
     
-    func updatePlacementArea(_ node: SCNNode, planeAnchor: ARPlaneAnchor) {
+    // MARK: ...updating
+    
+    private func updatePlacementArea(_ node: SCNNode, planeAnchor: ARPlaneAnchor) {
         
         let size = CGSize(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
         let center = planeAnchor.center

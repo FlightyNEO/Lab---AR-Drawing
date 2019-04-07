@@ -25,6 +25,16 @@ extension float4x4 {
         }
     }
     
+    var location: SCNVector3 {
+        get {
+            let translation = columns.3
+            return SCNVector3(translation.x, translation.y, translation.z)
+        }
+        set(newValue) {
+            columns.3 = float4(newValue.x, newValue.y, newValue.z, columns.3.w)
+        }
+    }
+    
     /**
      Factors out the orientation component of the transform.
     */
@@ -55,6 +65,30 @@ extension CGPoint {
     var length: CGFloat {
         return sqrt(x * x + y * y)
     }
+    
+    func distanceTo(_ point: CGPoint) -> CGFloat {
+        
+        let deltaX = point.x - self.x
+        let deltaY = point.y - self.y
+        let point = CGPoint(x: deltaX, y: deltaY)
+        
+        return point.length
+    }
+}
+
+// MARK: - SCNVector3 estension
+
+extension SCNVector3 {
+    
+    func distanceTo(_ vector: SCNVector3) -> Float {
+        
+        let positionOne = SCNVector3ToGLKVector3(vector)
+        let positionTwo = SCNVector3ToGLKVector3(self)
+        
+        return GLKVector3Distance(positionOne, positionTwo)
+        
+    }
+    
 }
 
 // MARK: - FloatingPoint extensions

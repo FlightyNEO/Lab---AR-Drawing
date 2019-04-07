@@ -124,12 +124,12 @@ extension ViewController: OptionsViewControllerDelegate {
     
     func undoLastObject() {
         
-        guard !planeNodes.isEmpty else {
+        guard !placedNodes.isEmpty else {
             dismiss(animated: true)
             return
         }
         
-        planeNodes.removeLast().removeFromParentNode()
+        placedNodes.removeLast().removeFromParentNode()
     }
     
     func resetScene() {

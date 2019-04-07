@@ -91,6 +91,35 @@ extension SCNVector3 {
     
 }
 
+// MARK: - SCNNode extension
+
+extension SCNNode {
+    
+    var depth: Float {
+        return boundingBox.max.z - boundingBox.min.z
+    }
+    
+    var sizeBox: (width: CGFloat, height: CGFloat, depth: CGFloat) {
+        
+        var box: (width: CGFloat, height: CGFloat, depth: CGFloat)
+        
+        let boundingBox = self.boundingBox
+        
+        box.width = CGFloat(boundingBox.max.x - boundingBox.min.x) * CGFloat(self.scale.x)
+        box.height = CGFloat(boundingBox.max.y - boundingBox.min.y) * CGFloat(self.scale.y)
+        box.depth = CGFloat(boundingBox.max.z - boundingBox.min.z) * CGFloat(self.scale.z)
+        
+        return box
+    }
+    
+    var maxSide: Float {
+        
+        return Float(max(sizeBox.width, sizeBox.height, sizeBox.depth))
+        
+    }
+    
+}
+
 // MARK: - FloatingPoint extensions
 
 extension Float: DegreesToRadiansProtocol { }

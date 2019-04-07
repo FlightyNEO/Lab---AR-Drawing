@@ -9,17 +9,8 @@ class ViewController: UIViewController {
     
     let configuration = ARWorldTrackingConfiguration()
     
-    /// Mimimim distance between nearby points (in 2D coordinates)
-    //let touchDistanceThreshold = CGFloat(80)
-    
     /// Mimimim distance between nearby nodes (in 3D coordinates)
-    let minDistanceBetweenVirtualObjects = Float(0.01)
-    
-//    /// Coordinates of last placed point
-//    var lastObjectPlacedLocation: CGPoint?
-    
-    /// Coordinates of last placed vector
-    //var lastObjectPlacedCoordinates: SCNVector3?
+    let minDistanceBetweenVirtualObjects = Float(0.05)
     
     /// Node selected by user
     var selectedNode: SCNNode?
@@ -190,7 +181,7 @@ extension ViewController {
     private func checkDistance(from node: SCNNode, to nodes: [SCNNode]) -> Bool {
         
         for secondNode in nodes {
-            guard checkDistanceBetweenNodes([node, secondNode]) else {
+            guard checkDistanceUsingBoxBetweenNodes([node, secondNode]) else {
                 return false
             }
         }
@@ -198,18 +189,35 @@ extension ViewController {
         return true
     }
     
-    private func checkDistanceBetweenNodes(_ nodes: [SCNNode]) -> Bool {
+    private func checkDistanceUsingBoxBetweenNodes(_ nodes: [SCNNode]) -> Bool {
         
         guard
             let firstNode = nodes.first,
             let secontNode = nodes.last else { return false }
         
-        let firstSphere = firstNode.boundingSphere
-        let secondSphere = secontNode.boundingSphere
+        let maxSizeFirstNode = firstNode.maxSide
+        let maxSizeSecondNode = secontNode.maxSide
         
         var distance = firstNode.worldPosition.distanceTo(secontNode.worldPosition)
-        distance -= firstSphere.radius
-        distance -= secondSphere.radius
+        distance -= maxSizeFirstNode / 2
+        distance -= maxSizeSecondNode / 2
+        
+        return distance >= minDistanceBetweenVirtualObjects
+        
+    }
+    
+    private func checkDistanceUsingSphereBetweenNodes(_ nodes: [SCNNode]) -> Bool {
+        
+        guard
+            let firstNode = nodes.first,
+            let secontNode = nodes.last else { return false }
+        
+        let firstSphere = firstNode.geometry?.boundingSphere
+        let secondSphere = secontNode.geometry?.boundingSphere
+        
+        var distance = firstNode.worldPosition.distanceTo(secontNode.worldPosition)
+        distance -= firstSphere?.radius ?? 0
+        distance -= secondSphere?.radius ?? 0
         
         return distance >= minDistanceBetweenVirtualObjects
         
@@ -227,7 +235,7 @@ extension ViewController {
         
     }
         
-    private func calculateTransformForFrontPosition(use location: CGPoint) -> simd_float4x4? {
+    private func calculateTransformForFrontPosition(for node: SCNNode, use location: CGPoint) -> simd_float4x4? {
         
         guard let currentFrame = sceneView.session.currentFrame else { return nil }
         
@@ -236,7 +244,7 @@ extension ViewController {
         let translateY = Float((location.y - center.y) / 3000)
         
         var translation = matrix_identity_float4x4
-        translation.columns.3.z = -0.2
+        translation.columns.3.z = -max(node.depth * 3, 0.2)
         translation.columns.3.x = translateY
         translation.columns.3.y = translateX
         
@@ -251,7 +259,7 @@ extension ViewController {
         
         switch objectMode {
         case .freeform:
-            transform = calculateTransformForFrontPosition(use: location)
+            transform = calculateTransformForFrontPosition(for: node, use: location)
         case .plane:
             transform = calculateTransformForPlanePosition(for: node, use: location)
         default:
@@ -261,6 +269,7 @@ extension ViewController {
         guard transform != nil else { return }
         
         node.simdTransform = transform!
+        //node.eulerAngles.z = 0
         
         // Check minimum distance
         guard checkDistance(from: node, to: placedNodes) else { return }

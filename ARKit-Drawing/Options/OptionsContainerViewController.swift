@@ -68,7 +68,9 @@ class OptionsContainerViewController: UIViewController, UINavigationControllerDe
             return fileEnumerator.compactMap { element in
                 let url = element as! URL
                 
-                guard url.pathExtension == "scn" else { return nil }
+                guard
+                    url.pathExtension == "scn",
+                    url.lastPathComponent != "lighting.scn" else { return nil }
                 
                 return url.lastPathComponent
             }

@@ -33,10 +33,10 @@ class OptionsContainerViewController: UIViewController, UINavigationControllerDe
     private func rootOptionPicker() -> UIViewController {
         let options = [
             Option(option: ShapeOption.addShape),
-            Option(option: ShapeOption.addScene),
-            Option(option: ShapeOption.togglePlane, showsDisclosureIndicator: false),
-            Option(option: ShapeOption.undoLastShape, showsDisclosureIndicator: false),
-            Option(option: ShapeOption.resetScene, showsDisclosureIndicator: false)
+            Option(option: ShapeOption.addScene)
+            //Option(option: ShapeOption.togglePlane, showsDisclosureIndicator: false),
+            //Option(option: ShapeOption.undoLastShape, showsDisclosureIndicator: false),
+            //Option(option: ShapeOption.resetScene, showsDisclosureIndicator: false)
         ]
         
         let selector = OptionSelectorViewController(options: options)
@@ -47,12 +47,12 @@ class OptionsContainerViewController: UIViewController, UINavigationControllerDe
                 self.nav?.pushViewController(self.shapePicker(), animated: true)
             case .addScene:
                 self.nav?.pushViewController(self.scenePicker(), animated: true)
-            case .togglePlane:
-                self.delegate?.togglePlaneVisualization()
-            case .undoLastShape:
-                self.delegate?.undoLastObject()
-            case .resetScene:
-                self.delegate?.resetScene()
+//            case .togglePlane:
+//                self.delegate?.togglePlaneVisualization()
+//            case .undoLastShape:
+//                self.delegate?.undoLastObject()
+//            case .resetScene:
+//                self.delegate?.resetScene()
             }
         }
         return selector

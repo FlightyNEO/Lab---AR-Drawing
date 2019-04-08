@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14087.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14075.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,6 +22,89 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <gestureRecognizers/>
                             </arscnView>
+                            <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b3e-Xk-lf0">
+                                <rect key="frame" x="17" y="40" width="40" height="40"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="dQb-Mv-cVf">
+                                    <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X4m-rc-RB3" userLabel="Undo">
+                                            <rect key="frame" x="5" y="5" width="30" height="30"/>
+                                            <state key="normal" image="reset">
+                                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="resetScene:" destination="BV1-FR-VrT" eventType="touchUpInside" id="mY8-HI-v8l"/>
+                                                <action selector="undoLastObjectFromScene" destination="BV1-FR-VrT" eventType="touchUpInside" id="rHR-eW-BJg"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="X4m-rc-RB3" firstAttribute="top" secondItem="dQb-Mv-cVf" secondAttribute="top" constant="5" id="JAa-dM-iSe"/>
+                                        <constraint firstAttribute="bottom" secondItem="X4m-rc-RB3" secondAttribute="bottom" constant="5" id="mtx-ZH-nJn"/>
+                                        <constraint firstItem="X4m-rc-RB3" firstAttribute="leading" secondItem="dQb-Mv-cVf" secondAttribute="leading" constant="5" id="se5-q7-WUy"/>
+                                        <constraint firstAttribute="trailing" secondItem="X4m-rc-RB3" secondAttribute="trailing" constant="5" id="xXr-8b-Xyr"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="fr3-QK-UHx"/>
+                                    <constraint firstAttribute="width" constant="40" id="x3u-AG-9HW"/>
+                                </constraints>
+                                <blurEffect style="light"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </visualEffectView>
+                            <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Vn-rb-fkI">
+                                <rect key="frame" x="238" y="40" width="120" height="60"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="EOG-n8-pEK">
+                                    <rect key="frame" x="0.0" y="0.0" width="120" height="60"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="aFl-Wu-QYO">
+                                            <rect key="frame" x="0.0" y="0.0" width="120" height="60"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FmB-hJ-8p3" userLabel="Undo">
+                                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                    <state key="normal" image="undo-redo-back-arrow-512">
+                                                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="undoLastObjectFromScene" destination="BV1-FR-VrT" eventType="touchUpInside" id="L4J-Eu-Jro"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cwd-Tm-RfH" userLabel="Redo">
+                                                    <rect key="frame" x="60" y="0.0" width="60" height="60"/>
+                                                    <state key="normal" image="redo-undo-go-arrow-512">
+                                                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="redoLasObjectToScene" destination="BV1-FR-VrT" eventType="touchUpInside" id="BHQ-kP-7Tu"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="aFl-Wu-QYO" firstAttribute="leading" secondItem="EOG-n8-pEK" secondAttribute="leading" id="02p-gW-HyE"/>
+                                        <constraint firstAttribute="bottom" secondItem="aFl-Wu-QYO" secondAttribute="bottom" id="34x-OF-AzW"/>
+                                        <constraint firstItem="aFl-Wu-QYO" firstAttribute="top" secondItem="EOG-n8-pEK" secondAttribute="top" id="Vfe-Cg-QB2"/>
+                                        <constraint firstAttribute="trailing" secondItem="aFl-Wu-QYO" secondAttribute="trailing" id="ilI-WH-GAm"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="Bed-a7-Bq7"/>
+                                    <constraint firstAttribute="width" constant="120" id="XaI-ZF-T0N"/>
+                                </constraints>
+                                <blurEffect style="light"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </visualEffectView>
                             <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nGv-ui-K4i">
                                 <rect key="frame" x="278" y="607" width="80" height="40"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="KbE-Uf-rq0">
@@ -103,22 +186,75 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </visualEffectView>
+                            <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rD6-hp-ebg">
+                                <rect key="frame" x="17" y="571" width="157" height="39"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Iph-PS-KfR">
+                                    <rect key="frame" x="0.0" y="0.0" width="157" height="39"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LzD-xj-5No">
+                                            <rect key="frame" x="0.0" y="0.0" width="92" height="39"/>
+                                            <string key="text">Plane
+vizualization</string>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="roO-hZ-4zn">
+                                            <rect key="frame" x="100" y="4" width="51" height="31"/>
+                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="onTintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <connections>
+                                                <action selector="togglePlaneVisualization:" destination="BV1-FR-VrT" eventType="valueChanged" id="GMn-JQ-ToE"/>
+                                            </connections>
+                                        </switch>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="roO-hZ-4zn" secondAttribute="bottom" constant="4" id="4Ns-4p-dov"/>
+                                        <constraint firstItem="roO-hZ-4zn" firstAttribute="leading" secondItem="LzD-xj-5No" secondAttribute="trailing" constant="8" id="6C4-G3-yV0"/>
+                                        <constraint firstItem="LzD-xj-5No" firstAttribute="top" secondItem="Iph-PS-KfR" secondAttribute="top" id="83J-eT-joV"/>
+                                        <constraint firstItem="LzD-xj-5No" firstAttribute="leading" secondItem="Iph-PS-KfR" secondAttribute="leading" id="9aw-WP-IwZ"/>
+                                        <constraint firstItem="roO-hZ-4zn" firstAttribute="top" secondItem="Iph-PS-KfR" secondAttribute="top" constant="4" id="L9A-fp-bCE"/>
+                                        <constraint firstAttribute="trailing" secondItem="roO-hZ-4zn" secondAttribute="trailing" constant="8" id="Vkp-cI-xui"/>
+                                        <constraint firstAttribute="bottom" secondItem="LzD-xj-5No" secondAttribute="bottom" id="Xgf-3j-vKw"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="157" id="Ssh-Tr-eLi"/>
+                                    <constraint firstAttribute="height" constant="39" id="qMa-yV-Gb6"/>
+                                </constraints>
+                                <blurEffect style="light"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="rD6-hp-ebg" firstAttribute="leading" secondItem="ZCE-wD-2E2" secondAttribute="leading" constant="17" id="8oO-ft-st7"/>
                             <constraint firstItem="ZCE-wD-2E2" firstAttribute="trailing" secondItem="Hss-D4-YVK" secondAttribute="trailing" id="9BF-a4-DTs"/>
                             <constraint firstItem="ZCE-wD-2E2" firstAttribute="bottom" secondItem="Hss-D4-YVK" secondAttribute="bottom" id="9oE-EN-HGn"/>
                             <constraint firstItem="ZCE-wD-2E2" firstAttribute="bottom" secondItem="nGv-ui-K4i" secondAttribute="bottom" constant="20" id="EI9-ck-jaV"/>
+                            <constraint firstItem="2Vn-rb-fkI" firstAttribute="top" secondItem="ZCE-wD-2E2" secondAttribute="top" constant="20" id="Oee-zi-IRr"/>
                             <constraint firstItem="Hss-D4-YVK" firstAttribute="top" secondItem="ZCE-wD-2E2" secondAttribute="top" id="OgV-19-dSa"/>
                             <constraint firstItem="ZCE-wD-2E2" firstAttribute="bottom" secondItem="RK5-mG-jKn" secondAttribute="bottom" constant="20" id="Pfd-Nb-YUs"/>
+                            <constraint firstItem="b3e-Xk-lf0" firstAttribute="leading" secondItem="ZCE-wD-2E2" secondAttribute="leading" constant="17" id="S1u-Vd-OdT"/>
+                            <constraint firstItem="RK5-mG-jKn" firstAttribute="top" secondItem="rD6-hp-ebg" secondAttribute="bottom" constant="8" id="Sn7-W6-tVR"/>
                             <constraint firstItem="RK5-mG-jKn" firstAttribute="leading" secondItem="ZCE-wD-2E2" secondAttribute="leading" constant="16" id="SnR-GG-ypT"/>
+                            <constraint firstItem="b3e-Xk-lf0" firstAttribute="top" secondItem="ZCE-wD-2E2" secondAttribute="top" constant="20" id="UY0-kE-UwD"/>
                             <constraint firstItem="ZCE-wD-2E2" firstAttribute="trailing" secondItem="nGv-ui-K4i" secondAttribute="trailing" constant="17" id="i2L-km-UXq"/>
+                            <constraint firstItem="ZCE-wD-2E2" firstAttribute="trailing" secondItem="2Vn-rb-fkI" secondAttribute="trailing" constant="17" id="iK5-GL-aXn"/>
                             <constraint firstItem="Hss-D4-YVK" firstAttribute="leading" secondItem="ZCE-wD-2E2" secondAttribute="leading" id="tq9-FB-eeV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZCE-wD-2E2"/>
                     </view>
                     <connections>
+                        <outlet property="planeVizualizationSwitch" destination="roO-hZ-4zn" id="jk4-cq-ha2"/>
+                        <outlet property="redoButton" destination="Cwd-Tm-RfH" id="Eis-bU-1gx"/>
                         <outlet property="sceneView" destination="Hss-D4-YVK" id="9bm-dS-QB2"/>
+                        <outlet property="undoButton" destination="FmB-hJ-8p3" id="dPu-2X-9Pk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
@@ -134,4 +270,9 @@
             <point key="canvasLocation" x="-578" y="59"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="redo-undo-go-arrow-512" width="256" height="256"/>
+        <image name="reset" width="490" height="490"/>
+        <image name="undo-redo-back-arrow-512" width="256" height="256"/>
+    </resources>
 </document>

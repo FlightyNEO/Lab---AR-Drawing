@@ -4,6 +4,9 @@ class ViewController: UIViewController {
     
     // MARK: IBOutlets
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var undoButton: UIButton!
+    @IBOutlet weak var redoButton: UIButton!
+    @IBOutlet weak var planeVizualizationSwitch: UISwitch!
     
     // MARK: - Properties
     
@@ -16,7 +19,22 @@ class ViewController: UIViewController {
     var selectedNode: SCNNode?
     
     /// Nodes placed by the user
-    var placedNodes = [SCNNode]()
+    var placedNodes = [SCNNode]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.undoButton.isEnabled = self.placedNodes.isEmpty ? false : true
+            }
+        }
+    }
+    
+    /// Nodes placed by the user remove from scene
+    var removedPlacedNodes = [SCNNode]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.redoButton.isEnabled = self.removedPlacedNodes.isEmpty ? false : true
+            }
+        }
+    }
     
     /// Visualization planes placed when detecting planes
     var planeNodes = [SCNNode]()
@@ -25,8 +43,21 @@ class ViewController: UIViewController {
     var showPlaneOverlay = false {
         didSet {
             for node in planeNodes {
-                node.isHidden = !showPlaneOverlay
+                if case .plane = objectMode {
+                    node.isHidden = !showPlaneOverlay
+                } else {
+                    node.isHidden = true
+                }
             }
+//            if case .plane = objectMode {
+//                for node in planeNodes {
+//                    node.isHidden = !showPlaneOverlay
+//                }
+//            } else {
+//                for node in planeNodes {
+//                    node.isHidden = true
+//                }
+//            }
         }
     }
     
@@ -67,21 +98,44 @@ class ViewController: UIViewController {
 // MARK: - Actions
 extension ViewController {
     
+    @IBAction func resetScene(_ sender: UIButton) {
+        self.reloadConfiguration()
+    }
+    
+    @IBAction func togglePlaneVisualization(_ sender: UISwitch) {
+        self.showPlaneOverlay = sender.isOn
+    }
+    
+    @IBAction func undoLastObjectFromScene() {
+        
+        guard !placedNodes.isEmpty else { return }
+        
+        let node = placedNodes.removeLast()
+        
+        node.removeFromParentNode()
+        removedPlacedNodes.append(node)
+    }
+    
+    @IBAction func redoLasObjectToScene() {
+        
+        guard !removedPlacedNodes.isEmpty else { return }
+        
+        addNodeToSceneRoot(removedPlacedNodes.removeLast(), clearTheRemovedNodesList: false)
+    }
+    
     @IBAction func changeObjectMode(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
             objectMode = .freeform
-            showPlaneOverlay = false
         case 1:
             objectMode = .plane
-            showPlaneOverlay = true
         case 2:
             objectMode = .image
-            showPlaneOverlay = false
         default:
             break
         }
         
+        showPlaneOverlay = planeVizualizationSwitch.isOn
     }
     
 }
@@ -119,7 +173,6 @@ extension ViewController: OptionsViewControllerDelegate {
             dismiss(animated: true)
             return
         }
-        
         placedNodes.removeLast().removeFromParentNode()
     }
     
@@ -164,12 +217,6 @@ extension ViewController {
         default: break
         }
         
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-        
-        //lastObjectPlacedCoordinates = nil
     }
     
 }
@@ -268,17 +315,13 @@ extension ViewController {
         
         guard transform != nil else { return }
         
-        node.simdTransform = transform!
-        //node.eulerAngles.z = 0
+        node.simdWorldTransform = transform!
         
         // Check minimum distance
         guard checkDistance(from: node, to: placedNodes) else { return }
         
         // Add node to scene root
         addNodeToSceneRoot(node)
-        
-        //lastObjectPlacedCoordinates = node.worldPosition
-        
     }
     
     /// Adds a node to parent node
@@ -287,7 +330,7 @@ extension ViewController {
     ///   - node: Node which will to be added
     ///   - parentNode: Parent node to which the node to be added
     ///   - isFloor: Parent node to which the node to be added
-    private func addNode(_ node: SCNNode, to parentNode: SCNNode, isFloor: Bool = false) {
+    private func addNode(_ node: SCNNode, to parentNode: SCNNode, isFloor: Bool = false, clearTheRemovedNodesList: Bool = true) {
         
         let cloneNode = isFloor ? node : node.clone()
         
@@ -295,15 +338,17 @@ extension ViewController {
         
         isFloor ? planeNodes.append(cloneNode) : placedNodes.append(cloneNode)
         
+        clearTheRemovedNodesList ? removedPlacedNodes.removeAll() : nil
+        
     }
     
     /// Adds an object adds an clone object defined by node to scene root
     ///
     /// - Parameter node: SCNNode wich will be added
-    private func addNodeToSceneRoot(_ node: SCNNode) {
+    private func addNodeToSceneRoot(_ node: SCNNode, clearTheRemovedNodesList: Bool = true) {
         
         let rootNode = sceneView.scene.rootNode
-        addNode(node, to: rootNode)
+        addNode(node, to: rootNode, clearTheRemovedNodesList: clearTheRemovedNodesList)
     }
     
     /// Plane node AR anchor has been added to the scene
@@ -316,7 +361,22 @@ extension ViewController {
         let size = CGSize(width: CGFloat(anchor.extent.x), height: CGFloat(anchor.extent.z))
         let placementArea = createPlacementArea(size: size)
         
-        placementArea.isHidden = !showPlaneOverlay
+        if case .plane = objectMode {
+            for node in planeNodes {
+                node.isHidden = !showPlaneOverlay
+            }
+        } else {
+            for node in planeNodes {
+                node.isHidden = true
+            }
+        }
+        
+        if case .plane = objectMode {
+            placementArea.isHidden = !showPlaneOverlay
+        } else {
+            placementArea.isHidden = true
+        }
+        
         addNode(placementArea, to: node, isFloor: true)
     }
     

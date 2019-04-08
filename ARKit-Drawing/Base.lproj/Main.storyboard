@@ -141,53 +141,8 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </visualEffectView>
-                            <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RK5-mG-jKn">
-                                <rect key="frame" x="16" y="618" width="158" height="29"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="KaD-5l-R64">
-                                    <rect key="frame" x="0.0" y="0.0" width="158" height="29"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RAH-ye-saP">
-                                            <rect key="frame" x="0.0" y="0.0" width="158" height="29"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="Ldw-TI-gOS">
-                                                <rect key="frame" x="0.0" y="0.0" width="158" height="29"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <subviews>
-                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="jVE-nl-i8i">
-                                                        <rect key="frame" x="0.0" y="0.0" width="160" height="29"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <segments>
-                                                            <segment title="Freeform"/>
-                                                            <segment title="Plane"/>
-                                                            <segment title="Image"/>
-                                                        </segments>
-                                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                        <connections>
-                                                            <action selector="changeObjectMode:" destination="BV1-FR-VrT" eventType="valueChanged" id="fwT-tb-oeL"/>
-                                                        </connections>
-                                                    </segmentedControl>
-                                                </subviews>
-                                            </view>
-                                            <vibrancyEffect>
-                                                <blurEffect style="light"/>
-                                            </vibrancyEffect>
-                                        </visualEffectView>
-                                    </subviews>
-                                </view>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="158" id="5d0-eI-fhj"/>
-                                    <constraint firstAttribute="height" constant="29" id="WNC-pW-iAf"/>
-                                </constraints>
-                                <blurEffect style="light"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </visualEffectView>
-                            <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rD6-hp-ebg">
-                                <rect key="frame" x="17" y="571" width="157" height="39"/>
+                            <visualEffectView hidden="YES" opaque="NO" clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rD6-hp-ebg">
+                                <rect key="frame" x="16.5" y="612.5" width="157" height="39"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Iph-PS-KfR">
                                     <rect key="frame" x="0.0" y="0.0" width="157" height="39"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -230,10 +185,64 @@ vizualization</string>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </visualEffectView>
+                            <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RK5-mG-jKn">
+                                <rect key="frame" x="16" y="617" width="158" height="30"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="KaD-5l-R64">
+                                    <rect key="frame" x="0.0" y="0.0" width="158" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RAH-ye-saP">
+                                            <rect key="frame" x="0.0" y="0.0" width="158" height="30"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Ldw-TI-gOS">
+                                                <rect key="frame" x="0.0" y="0.0" width="158" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="jVE-nl-i8i">
+                                                        <rect key="frame" x="0.0" y="0.0" width="158" height="31"/>
+                                                        <segments>
+                                                            <segment title="Freeform"/>
+                                                            <segment title="Plane"/>
+                                                            <segment title="Image"/>
+                                                        </segments>
+                                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <connections>
+                                                            <action selector="changeObjectMode:" destination="BV1-FR-VrT" eventType="valueChanged" id="fwT-tb-oeL"/>
+                                                        </connections>
+                                                    </segmentedControl>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="jVE-nl-i8i" secondAttribute="bottom" id="Mr1-rF-Eop"/>
+                                                    <constraint firstItem="jVE-nl-i8i" firstAttribute="top" secondItem="Ldw-TI-gOS" secondAttribute="top" id="iQB-4y-jVL"/>
+                                                    <constraint firstItem="jVE-nl-i8i" firstAttribute="leading" secondItem="Ldw-TI-gOS" secondAttribute="leading" id="wFX-Xe-PZj"/>
+                                                    <constraint firstAttribute="trailing" secondItem="jVE-nl-i8i" secondAttribute="trailing" id="wRX-TR-FFV"/>
+                                                </constraints>
+                                            </view>
+                                            <vibrancyEffect>
+                                                <blurEffect style="light"/>
+                                            </vibrancyEffect>
+                                        </visualEffectView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="RAH-ye-saP" firstAttribute="leading" secondItem="KaD-5l-R64" secondAttribute="leading" id="6ub-In-AFF"/>
+                                        <constraint firstAttribute="bottom" secondItem="RAH-ye-saP" secondAttribute="bottom" id="Agw-s9-LaG"/>
+                                        <constraint firstItem="RAH-ye-saP" firstAttribute="top" secondItem="KaD-5l-R64" secondAttribute="top" id="D2M-08-LQ2"/>
+                                        <constraint firstAttribute="trailing" secondItem="RAH-ye-saP" secondAttribute="trailing" id="yvr-oQ-ZoY"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="158" id="5d0-eI-fhj"/>
+                                    <constraint firstAttribute="height" constant="30" id="WNC-pW-iAf"/>
+                                </constraints>
+                                <blurEffect style="light"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="rD6-hp-ebg" firstAttribute="leading" secondItem="ZCE-wD-2E2" secondAttribute="leading" constant="17" id="8oO-ft-st7"/>
                             <constraint firstItem="ZCE-wD-2E2" firstAttribute="trailing" secondItem="Hss-D4-YVK" secondAttribute="trailing" id="9BF-a4-DTs"/>
                             <constraint firstItem="ZCE-wD-2E2" firstAttribute="bottom" secondItem="Hss-D4-YVK" secondAttribute="bottom" id="9oE-EN-HGn"/>
                             <constraint firstItem="ZCE-wD-2E2" firstAttribute="bottom" secondItem="nGv-ui-K4i" secondAttribute="bottom" constant="20" id="EI9-ck-jaV"/>
@@ -246,12 +255,22 @@ vizualization</string>
                             <constraint firstItem="b3e-Xk-lf0" firstAttribute="top" secondItem="ZCE-wD-2E2" secondAttribute="top" constant="20" id="UY0-kE-UwD"/>
                             <constraint firstItem="ZCE-wD-2E2" firstAttribute="trailing" secondItem="nGv-ui-K4i" secondAttribute="trailing" constant="17" id="i2L-km-UXq"/>
                             <constraint firstItem="ZCE-wD-2E2" firstAttribute="trailing" secondItem="2Vn-rb-fkI" secondAttribute="trailing" constant="17" id="iK5-GL-aXn"/>
+                            <constraint firstItem="rD6-hp-ebg" firstAttribute="centerY" secondItem="jVE-nl-i8i" secondAttribute="centerY" id="nPu-An-VP6"/>
                             <constraint firstItem="Hss-D4-YVK" firstAttribute="leading" secondItem="ZCE-wD-2E2" secondAttribute="leading" id="tq9-FB-eeV"/>
+                            <constraint firstItem="rD6-hp-ebg" firstAttribute="centerX" secondItem="jVE-nl-i8i" secondAttribute="centerX" id="zyn-f1-a1B"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZCE-wD-2E2"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Sn7-W6-tVR"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="planeVizualizationSwitch" destination="roO-hZ-4zn" id="jk4-cq-ha2"/>
+                        <outlet property="planeVizualizationView" destination="rD6-hp-ebg" id="zuo-KZ-g64"/>
+                        <outlet property="planeVizualizationViewToObjectModeViewCenterVertical" destination="nPu-An-VP6" id="WIy-1v-Fw0"/>
+                        <outlet property="planeVizualizationViewToObjectModeViewVerticalSpasing" destination="Sn7-W6-tVR" id="w28-me-g6t"/>
                         <outlet property="redoButton" destination="Cwd-Tm-RfH" id="Eis-bU-1gx"/>
                         <outlet property="sceneView" destination="Hss-D4-YVK" id="9bm-dS-QB2"/>
                         <outlet property="undoButton" destination="FmB-hJ-8p3" id="dPu-2X-9Pk"/>

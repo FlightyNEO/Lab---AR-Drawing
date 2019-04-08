@@ -6,8 +6,11 @@ class ViewController: UIViewController {
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var redoButton: UIButton!
+    @IBOutlet weak var planeVizualizationView: UIVisualEffectView!
     @IBOutlet weak var planeVizualizationSwitch: UISwitch!
     
+    @IBOutlet weak var planeVizualizationViewToObjectModeViewCenterVertical: NSLayoutConstraint!
+    @IBOutlet weak var planeVizualizationViewToObjectModeViewVerticalSpasing: NSLayoutConstraint!
     // MARK: - Properties
     
     let configuration = ARWorldTrackingConfiguration()
@@ -124,6 +127,7 @@ extension ViewController {
     }
     
     @IBAction func changeObjectMode(_ sender: UISegmentedControl) {
+        
         switch sender.selectedSegmentIndex {
         case 0:
             objectMode = .freeform
@@ -135,7 +139,39 @@ extension ViewController {
             break
         }
         
+        if case .plane = objectMode {
+            
+            self.planeVizualizationView.isHidden = false
+            self.planeVizualizationViewToObjectModeViewCenterVertical.isActive = false
+            self.planeVizualizationViewToObjectModeViewVerticalSpasing.isActive = true
+            
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
+                
+                self.planeVizualizationView.alpha = 1
+                self.view.layoutIfNeeded()
+                
+            }) { _ in
+                
+            }
+            
+        } else {
+            
+            self.planeVizualizationViewToObjectModeViewCenterVertical.isActive = true
+            self.planeVizualizationViewToObjectModeViewVerticalSpasing.isActive = false
+            
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
+                
+                self.planeVizualizationView.alpha = 0
+                self.view.layoutIfNeeded()
+                
+            }) { _ in
+                self.planeVizualizationView.isHidden = true
+            }
+            
+        }
+        
         showPlaneOverlay = planeVizualizationSwitch.isOn
+        
     }
     
 }

@@ -6,7 +6,12 @@ class ViewController: UIViewController {
     @IBOutlet var sceneView: ARSCNView!
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var redoButton: UIButton!
-    @IBOutlet weak var planeVizualizationView: UIVisualEffectView!
+    @IBOutlet weak var planeVizualizationView: UIVisualEffectView! {
+        didSet {
+            planeVizualizationView?.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
+            planeVizualizationView.alpha = 0
+        }
+    }
     @IBOutlet weak var planeVizualizationSwitch: UISwitch!
     
     @IBOutlet weak var planeVizualizationViewToObjectModeViewCenterVertical: NSLayoutConstraint!
@@ -52,15 +57,6 @@ class ViewController: UIViewController {
                     node.isHidden = true
                 }
             }
-//            if case .plane = objectMode {
-//                for node in planeNodes {
-//                    node.isHidden = !showPlaneOverlay
-//                }
-//            } else {
-//                for node in planeNodes {
-//                    node.isHidden = true
-//                }
-//            }
         }
     }
     
@@ -141,26 +137,29 @@ extension ViewController {
         
         if case .plane = objectMode {
             
-            self.planeVizualizationView.isHidden = false
-            self.planeVizualizationViewToObjectModeViewCenterVertical.isActive = false
-            self.planeVizualizationViewToObjectModeViewVerticalSpasing.isActive = true
+            planeVizualizationView.isHidden = false
+            planeVizualizationViewToObjectModeViewCenterVertical.isActive = false
+            planeVizualizationViewToObjectModeViewVerticalSpasing.isActive = true
             
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
                 
+                self.planeVizualizationView?.transform = CGAffineTransform(scaleX: 1, y: 1)
                 self.planeVizualizationView.alpha = 1
                 self.view.layoutIfNeeded()
                 
             }) { _ in
-                
+                self.planeVizualizationSwitch.isUserInteractionEnabled = true
             }
             
         } else {
             
-            self.planeVizualizationViewToObjectModeViewCenterVertical.isActive = true
-            self.planeVizualizationViewToObjectModeViewVerticalSpasing.isActive = false
+            planeVizualizationSwitch.isUserInteractionEnabled = false
+            planeVizualizationViewToObjectModeViewCenterVertical.isActive = true
+            planeVizualizationViewToObjectModeViewVerticalSpasing.isActive = false
             
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
                 
+                self.planeVizualizationView?.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
                 self.planeVizualizationView.alpha = 0
                 self.view.layoutIfNeeded()
                 
